@@ -24,17 +24,18 @@ class PinCodeView extends StatefulWidget {
   final Color normalColor;
   final Color selectedColor;
 
-  const PinCodeView({Key key,
-    this.title,
-    this.subTitle,
-    this.errorMsg,
-    this.onSuccess,
-    this.correctPin = 0,
-    this.length = 4,
-    this.bgColor = Colors.white,
-    this.textColor = Colors.white,
-    this.normalColor = Colors.black45,
-    this.selectedColor = Colors.blue})
+  const PinCodeView(
+      {Key key,
+      this.title,
+      this.subTitle,
+      this.errorMsg,
+      this.onSuccess,
+      this.correctPin = 0,
+      this.length = 4,
+      this.bgColor = Colors.white,
+      this.textColor = Colors.white,
+      this.normalColor = Colors.black45,
+      this.selectedColor = Colors.blue})
       : super(key: key);
 
   @override
@@ -75,82 +76,75 @@ class _StatePinCodeView extends State<PinCodeView> {
             selLength = state.selLength;
             hasError = state.hasError;
           }
-          return Container(
-            color: widget.bgColor,
-            padding: EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                SizedBox(
-                  height: 10,
-                ),
-                widget.title,
-                SizedBox(
-                  height: 10,
-                ),
-                Container(
-                    height: 40,
-                    child: Center(
-                      child: ListView.builder(
-                        physics: NeverScrollableScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          return SinglePinView(
-                            normalColor: widget.normalColor,
-                            selectedColor: widget.selectedColor,
-                            hasValue: index < selLength,
-                          );
-                        },
-                        itemCount: widget.length,
-                      ),
-                    )),
-                Flexible(
-                    child: Visibility(
-                      visible: hasError,
-                      child: Container(
-                        padding: EdgeInsets.only(
-                          top: 10,
-                        ),
-                        child: Text(
-                          widget.errorMsg,
-                          style: TextStyle(color: Colors.red, fontSize: 14),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    )),
-                SizedBox(
-                  height: 10,
-                ),
-                widget.subTitle,
-                SizedBox(
-                  height: 10,
-                ),
-                Expanded(
-                    child: GridView.count(
+          return ListView(
+            children: <Widget>[
+              SizedBox(
+                height: 10,
+              ),
+              widget.title,
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                  height: 40,
+                  child: Center(
+                    child: ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
-                      childAspectRatio: 3,
-                      crossAxisCount: 3,
-                      mainAxisSpacing: 4,
-                      crossAxisSpacing: 4,
-                      children: <Widget>[
-                        buildButtonNumber(1),
-                        buildButtonNumber(2),
-                        buildButtonNumber(3),
-                        buildButtonNumber(4),
-                        buildButtonNumber(5),
-                        buildButtonNumber(6),
-                        buildButtonNumber(7),
-                        buildButtonNumber(8),
-                        buildButtonNumber(9),
-                        Container(),
-                        buildButtonNumber(0),
-                        buildContainerIcon(Icons.backspace),
-                      ],
-                    ))
-              ],
-            ),
+                      itemBuilder: (context, index) {
+                        return SinglePinView(
+                          normalColor: widget.normalColor,
+                          selectedColor: widget.selectedColor,
+                          hasValue: index < selLength,
+                        );
+                      },
+                      itemCount: widget.length,
+                    ),
+                  )),
+              Visibility(
+                visible: hasError,
+                child: Container(
+                  padding: EdgeInsets.only(
+                    top: 10,
+                  ),
+                  child: Text(
+                    widget.errorMsg,
+                    style: TextStyle(color: Colors.red, fontSize: 14),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              widget.subTitle,
+              SizedBox(
+                height: 10,
+              ),
+              GridView.count(
+                padding: EdgeInsets.only(left: 10, right: 10),
+                shrinkWrap: true,
+                childAspectRatio: 3,
+                crossAxisCount: 3,
+                mainAxisSpacing: 4,
+                crossAxisSpacing: 4,
+                children: <Widget>[
+                  buildButtonNumber(1),
+                  buildButtonNumber(2),
+                  buildButtonNumber(3),
+                  buildButtonNumber(4),
+                  buildButtonNumber(5),
+                  buildButtonNumber(6),
+                  buildButtonNumber(7),
+                  buildButtonNumber(8),
+                  buildButtonNumber(9),
+                  Container(),
+                  buildButtonNumber(0),
+                  buildContainerIcon(Icons.backspace),
+                ],
+              )
+            ],
           );
         },
       ),
