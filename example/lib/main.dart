@@ -36,9 +36,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text(widget.title),
       ),
@@ -50,28 +53,43 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
-}
 
-void _newTaskModalBottomSheet(context) {
-  showModalBottomSheet(
-      context: context,
-      builder: (context) {
-        return PinCodeView(
-          title: Text(
-            'Please input PIN to continue',
-            style: TextStyle(color: Colors.blue),
-            textAlign: TextAlign.center,
-          ),
-          subTitle: InkWell(
-            onTap: () {},
-            child: Text(
-              'Forgot PIN?',
+  void _newTaskModalBottomSheet(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return PinCodeView(
+            correctPin: 5555,
+            title: Text(
+              'Please input PIN to continue',
               style: TextStyle(color: Colors.blue),
               textAlign: TextAlign.center,
             ),
-          ),
-          errorMsg: 'Inccorrect PIN',
-          onSuccess: () {},
-        );
-      });
+            subTitle: InkWell(
+              onTap: () {},
+              child: Text(
+                'Forgot PIN?',
+                style: TextStyle(color: Colors.blue),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            errorMsg: 'Inccorrect PIN',
+            onSuccess: (pin) {
+              Navigator.pop(context);
+              _showSnackBar(pin);
+            },
+          );
+        });
+  }
+
+  void _showSnackBar(String pinCode) {
+    _scaffoldKey.currentState.showSnackBar(SnackBar(
+      content: Text(
+        "PIN Code: $pinCode",
+        style: TextStyle(color: Colors.white),
+      ),
+      backgroundColor: Colors.blue,
+      duration: Duration(seconds: 3),
+    ));
+  }
 }

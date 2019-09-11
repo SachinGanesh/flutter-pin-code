@@ -32,15 +32,16 @@ class PinCodeViewBloc extends Bloc<PinCodeViewEvent, PinCodeViewState> {
       listPin.add(number);
       yield SelectedPinCodeState(listPin.length, false);
       if (pinLength == listPin.length) {
+        var pinMap = StringBuffer();
+        listPin.forEach((num) {
+          pinMap.write(num);
+        });
         if (correctPin == 0) {
-          listPin.clear();
-          yield SuccessPinCodeState();
+          yield SuccessPinCodeState(pinMap.toString());
           return;
         }
-        var pinMap = String.fromCharCodes(listPin);
-        if (pinMap == correctPin.toString()) {
-          listPin.clear();
-          yield SuccessPinCodeState();
+        if (pinMap.toString() == correctPin.toString()) {
+          yield SuccessPinCodeState(pinMap.toString());
         } else {
           yield SelectedPinCodeState(listPin.length, true);
           await Future.delayed(Duration(seconds: 3));

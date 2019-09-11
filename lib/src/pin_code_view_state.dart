@@ -20,6 +20,10 @@ class SelectedPinCodeState extends PinCodeViewState {
 }
 
 class SuccessPinCodeState extends PinCodeViewState {
+  final String pin;
+
+  SuccessPinCodeState(this.pin) : super([pin]);
+
   @override
   String toString() => 'SuccessPinCodeState';
 }

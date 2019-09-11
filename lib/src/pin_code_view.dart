@@ -12,11 +12,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_pin_code/src/single_pin_view.dart';
 import 'bloc.dart';
 
+typedef PinCodeSuccess(String pin);
+
 class PinCodeView extends StatefulWidget {
   final Widget title;
   final Widget subTitle;
   final String errorMsg;
-  final VoidCallback onSuccess;
+  final PinCodeSuccess onSuccess;
   final int length;
   final int correctPin;
   final Color bgColor;
@@ -62,7 +64,7 @@ class _StatePinCodeView extends State<PinCodeView> {
     return BlocListener(
       listener: (context, state) {
         if (state is SuccessPinCodeState) {
-          widget.onSuccess();
+          widget.onSuccess(state.pin);
           return;
         }
       },
@@ -76,14 +78,13 @@ class _StatePinCodeView extends State<PinCodeView> {
             selLength = state.selLength;
             hasError = state.hasError;
           }
-          return ListView(
+          return Wrap(
             children: <Widget>[
-              SizedBox(
-                height: 10,
-              ),
-              widget.title,
-              SizedBox(
-                height: 10,
+              Container(
+                padding: EdgeInsets.only(top: 10, bottom: 10),
+                child: Center(
+                  child: widget.title,
+                ),
               ),
               Container(
                   height: 40,
@@ -108,22 +109,23 @@ class _StatePinCodeView extends State<PinCodeView> {
                   padding: EdgeInsets.only(
                     top: 10,
                   ),
-                  child: Text(
-                    widget.errorMsg,
-                    style: TextStyle(color: Colors.red, fontSize: 14),
-                    textAlign: TextAlign.center,
+                  child: Center(
+                    child: Text(
+                      widget.errorMsg,
+                      style: TextStyle(color: Colors.red, fontSize: 14),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
               ),
-              SizedBox(
-                height: 10,
-              ),
-              widget.subTitle,
-              SizedBox(
-                height: 10,
+              Container(
+                padding: EdgeInsets.only(top: 10, bottom: 10),
+                child: Center(
+                  child: widget.subTitle,
+                ),
               ),
               GridView.count(
-                padding: EdgeInsets.only(left: 10, right: 10),
+                padding: EdgeInsets.only(left: 10, right: 10, bottom: 10),
                 shrinkWrap: true,
                 childAspectRatio: 3,
                 crossAxisCount: 3,
