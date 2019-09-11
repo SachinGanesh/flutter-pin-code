@@ -46,6 +46,8 @@ class PinCodeView extends StatefulWidget {
 
 class _StatePinCodeView extends State<PinCodeView> {
   PinCodeViewBloc _pinCodeViewBloc;
+  bool hasError = false;
+  int selLength = 0;
 
   @override
   void initState() {
@@ -67,90 +69,92 @@ class _StatePinCodeView extends State<PinCodeView> {
           widget.onSuccess(state.pin);
           return;
         }
+        if (state is SelectedPinCodeState) {
+          selLength = state.selLength;
+          hasError = state.hasError;
+          setState(() {});
+          hideError();
+        }
       },
       bloc: _pinCodeViewBloc,
-      child: BlocBuilder(
-        bloc: _pinCodeViewBloc,
-        builder: (context, state) {
-          int selLength = 0;
-          bool hasError = false;
-          if (state is SelectedPinCodeState) {
-            selLength = state.selLength;
-            hasError = state.hasError;
-          }
-          return Wrap(
+      child: Wrap(
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.only(top: 10, bottom: 10),
+            child: Center(
+              child: widget.title,
+            ),
+          ),
+          Container(
+              height: 40,
+              child: Center(
+                child: ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return SinglePinView(
+                      normalColor: widget.normalColor,
+                      selectedColor: widget.selectedColor,
+                      hasValue: index < selLength,
+                    );
+                  },
+                  itemCount: widget.length,
+                ),
+              )),
+          Visibility(
+            visible: hasError,
+            child: Container(
+              padding: EdgeInsets.only(
+                top: 10,
+              ),
+              child: Center(
+                child: Text(
+                  widget.errorMsg,
+                  style: TextStyle(color: Colors.red, fontSize: 14),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.only(top: 10, bottom: 10),
+            child: Center(
+              child: widget.subTitle,
+            ),
+          ),
+          GridView.count(
+            padding: EdgeInsets.only(left: 10, right: 10, bottom: 10),
+            shrinkWrap: true,
+            childAspectRatio: 3,
+            crossAxisCount: 3,
+            mainAxisSpacing: 4,
+            crossAxisSpacing: 4,
             children: <Widget>[
-              Container(
-                padding: EdgeInsets.only(top: 10, bottom: 10),
-                child: Center(
-                  child: widget.title,
-                ),
-              ),
-              Container(
-                  height: 40,
-                  child: Center(
-                    child: ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return SinglePinView(
-                          normalColor: widget.normalColor,
-                          selectedColor: widget.selectedColor,
-                          hasValue: index < selLength,
-                        );
-                      },
-                      itemCount: widget.length,
-                    ),
-                  )),
-              Visibility(
-                visible: hasError,
-                child: Container(
-                  padding: EdgeInsets.only(
-                    top: 10,
-                  ),
-                  child: Center(
-                    child: Text(
-                      widget.errorMsg,
-                      style: TextStyle(color: Colors.red, fontSize: 14),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.only(top: 10, bottom: 10),
-                child: Center(
-                  child: widget.subTitle,
-                ),
-              ),
-              GridView.count(
-                padding: EdgeInsets.only(left: 10, right: 10, bottom: 10),
-                shrinkWrap: true,
-                childAspectRatio: 3,
-                crossAxisCount: 3,
-                mainAxisSpacing: 4,
-                crossAxisSpacing: 4,
-                children: <Widget>[
-                  buildButtonNumber(1),
-                  buildButtonNumber(2),
-                  buildButtonNumber(3),
-                  buildButtonNumber(4),
-                  buildButtonNumber(5),
-                  buildButtonNumber(6),
-                  buildButtonNumber(7),
-                  buildButtonNumber(8),
-                  buildButtonNumber(9),
-                  Container(),
-                  buildButtonNumber(0),
-                  buildContainerIcon(Icons.backspace),
-                ],
-              )
+              buildButtonNumber(1),
+              buildButtonNumber(2),
+              buildButtonNumber(3),
+              buildButtonNumber(4),
+              buildButtonNumber(5),
+              buildButtonNumber(6),
+              buildButtonNumber(7),
+              buildButtonNumber(8),
+              buildButtonNumber(9),
+              Container(),
+              buildButtonNumber(0),
+              buildContainerIcon(Icons.backspace),
             ],
-          );
-        },
+          )
+        ],
       ),
     );
+  }
+
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
   }
 
   Widget buildButtonNumber(int number) {
@@ -189,5 +193,15 @@ class _StatePinCodeView extends State<PinCodeView> {
         ),
       ),
     );
+  }
+
+  void hideError() {
+    if (hasError) {
+      Future.delayed(Duration(seconds: 3), () {
+        setState(() {
+          hasError = false;
+        });
+      });
+    }
   }
 }

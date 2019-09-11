@@ -73,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 textAlign: TextAlign.center,
               ),
             ),
-            errorMsg: 'Inccorrect PIN',
+            errorMsg: 'Wrong PIN',
             onSuccess: (pin) {
               Navigator.pop(context);
               _showSnackBar(pin);

@@ -36,6 +36,7 @@ class PinCodeViewBloc extends Bloc<PinCodeViewEvent, PinCodeViewState> {
         listPin.forEach((num) {
           pinMap.write(num);
         });
+        listPin.clear();
         if (correctPin == 0) {
           yield SuccessPinCodeState(pinMap.toString());
           return;
@@ -43,9 +44,7 @@ class PinCodeViewBloc extends Bloc<PinCodeViewEvent, PinCodeViewState> {
         if (pinMap.toString() == correctPin.toString()) {
           yield SuccessPinCodeState(pinMap.toString());
         } else {
-          yield SelectedPinCodeState(listPin.length, true);
-          await Future.delayed(Duration(seconds: 3));
-          yield SelectedPinCodeState(0, false);
+          yield SelectedPinCodeState(0, true);
         }
       }
     }
