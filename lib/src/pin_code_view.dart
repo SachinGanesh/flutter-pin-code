@@ -14,12 +14,13 @@ import 'bloc.dart';
 
 typedef PinCodeSuccess(String pin);
 
+const DEF_PIN_LENGTH = 4;
+
 class PinCodeView extends StatefulWidget {
   final Widget title;
   final Widget subTitle;
   final String errorMsg;
   final PinCodeSuccess onSuccess;
-  final int length;
   final int correctPin;
   final Color bgColor;
   final Color textColor;
@@ -33,7 +34,6 @@ class PinCodeView extends StatefulWidget {
       this.errorMsg,
       this.onSuccess,
       this.correctPin = 0,
-      this.length = 4,
       this.bgColor = Colors.white,
       this.textColor = Colors.white,
       this.normalColor = Colors.black45,
@@ -48,10 +48,14 @@ class _StatePinCodeView extends State<PinCodeView> {
   PinCodeViewBloc _pinCodeViewBloc;
   bool hasError = false;
   int selLength = 0;
+  int length = DEF_PIN_LENGTH;
 
   @override
   void initState() {
-    _pinCodeViewBloc = PinCodeViewBloc(widget.length, widget.correctPin);
+    if (widget.correctPin > 0) {
+      length = widget.correctPin.toString().length;
+    }
+    _pinCodeViewBloc = PinCodeViewBloc(length, widget.correctPin);
     super.initState();
   }
 
@@ -99,7 +103,7 @@ class _StatePinCodeView extends State<PinCodeView> {
                       hasValue: index < selLength,
                     );
                   },
-                  itemCount: widget.length,
+                  itemCount: length,
                 ),
               )),
           Visibility(

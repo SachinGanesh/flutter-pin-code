@@ -59,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
         context: context,
         builder: (context) {
           return PinCodeView(
-            correctPin: 5555,
+            correctPin: 555555,
             title: Text(
               'Please input PIN to continue',
               style: TextStyle(color: Colors.blue),
