@@ -13,6 +13,7 @@ dependencies:
   bloc: ^0.15.0
   flutter_bloc: ^0.21.0
   equatable: ^0.5.1
+  flutter_screenutil: ^0.5.2
 
 dev_dependencies:
   flutter_test:

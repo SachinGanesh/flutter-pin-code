@@ -10,11 +10,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_pin_code/src/single_pin_view.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'bloc.dart';
 
 typedef PinCodeSuccess(String pin);
 
 const DEF_PIN_LENGTH = 4;
+const screenWidthPhone = 1242.0; //Apple iPhone XS Max
+const screenHeightPhone = 2688.0;
 
 class PinCodeView extends StatefulWidget {
   final Widget title;
@@ -67,6 +70,11 @@ class _StatePinCodeView extends State<PinCodeView> {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.instance = ScreenUtil(
+      width: screenWidthPhone,
+      height: screenHeightPhone,
+      allowFontScaling: false,
+    )..init(context);
     return BlocListener(
       listener: (context, state) {
         if (state is SuccessPinCodeState) {
@@ -84,13 +92,15 @@ class _StatePinCodeView extends State<PinCodeView> {
       child: Wrap(
         children: <Widget>[
           Container(
-            padding: EdgeInsets.only(top: 10, bottom: 10),
+            padding: EdgeInsets.only(
+                top: ScreenUtil.instance.setHeight(40),
+                bottom: ScreenUtil.instance.setHeight(40)),
             child: Center(
               child: widget.title,
             ),
           ),
           Container(
-              height: 40,
+              height: ScreenUtil.instance.setHeight(120),
               child: Center(
                 child: ListView.builder(
                   physics: NeverScrollableScrollPhysics(),
@@ -110,25 +120,32 @@ class _StatePinCodeView extends State<PinCodeView> {
             visible: hasError,
             child: Container(
               padding: EdgeInsets.only(
-                top: 10,
+                top: ScreenUtil.instance.setHeight(40),
               ),
               child: Center(
                 child: Text(
                   widget.errorMsg,
-                  style: TextStyle(color: Colors.red, fontSize: 14),
+                  style: TextStyle(
+                      color: Colors.red,
+                      fontSize: ScreenUtil.instance.setSp(42)),
                   textAlign: TextAlign.center,
                 ),
               ),
             ),
           ),
           Container(
-            padding: EdgeInsets.only(top: 10, bottom: 10),
+            padding: EdgeInsets.only(
+                top: ScreenUtil.instance.setHeight(40),
+                bottom: ScreenUtil.instance.setHeight(40)),
             child: Center(
               child: widget.subTitle,
             ),
           ),
           GridView.count(
-            padding: EdgeInsets.only(left: 10, right: 10, bottom: 10),
+            padding: EdgeInsets.only(
+                left: ScreenUtil.instance.setWidth(40),
+                right: ScreenUtil.instance.setWidth(40),
+                bottom: ScreenUtil.instance.setHeight(60)),
             shrinkWrap: true,
             childAspectRatio: 3,
             crossAxisCount: 3,
@@ -172,7 +189,7 @@ class _StatePinCodeView extends State<PinCodeView> {
           child: Text(
             number.toString(),
             style: TextStyle(
-                fontSize: 16,
+                fontSize: ScreenUtil.instance.setSp(56),
                 fontWeight: FontWeight.normal,
                 color: widget.textColor),
           ),
@@ -191,7 +208,7 @@ class _StatePinCodeView extends State<PinCodeView> {
         child: Center(
           child: Icon(
             iconData,
-            size: 30,
+            size: ScreenUtil.instance.setSp(90),
             color: widget.normalColor,
           ),
         ),

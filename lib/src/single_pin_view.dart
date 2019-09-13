@@ -8,6 +8,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SinglePinView extends StatelessWidget {
   final bool hasValue;
@@ -21,12 +22,15 @@ class SinglePinView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(left: 4, right: 4),
+      padding: EdgeInsets.only(
+          left: ScreenUtil.instance.setWidth(10),
+          right: ScreenUtil.instance.setWidth(10)),
       child: Center(
         child: Text(
           hasValue ? '●' : '○',
           style: TextStyle(
-              fontSize: 30, color: hasValue ? selectedColor : normalColor),
+              fontSize: ScreenUtil.instance.setSp(64),
+              color: hasValue ? selectedColor : normalColor),
         ),
       ),
     );
