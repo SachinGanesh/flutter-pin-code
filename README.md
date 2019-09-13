@@ -1,14 +1,62 @@
 # flutter_pin_code
 
-A new Flutter pin code package.
+A simple material design pin code view for flutter apps. Pull requests are always welcome.
 
-## Getting Started
+## Installation
 
-This project is a starting point for a Dart
-[package](https://flutter.dev/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
+#### 1. Depend on it
+Add this to your package's pubspec.yaml file:
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+```
+dependencies:
+  flutter_pin_code: ^0.0.1
+```
+
+#### 2. Install it
+You can install packages from the command line:
+
+with pub:
+
+```
+$ pub get
+```
+
+with Flutter:
+
+```
+$ flutter pub get
+```
+
+Alternatively, your editor might support pub get or flutter pub get. Check the docs for your editor to learn more.
+
+## Usage
+
+```dart
+import 'package:flutter_pin_code/flutter_pin_code.dart';
+
+class MyWidget extends StatelessWidget {
+  Widget build(BuildContext context) {
+    return PinCodeView(
+       correctPin: 555555,
+       title: Text(
+         'Please input PIN to continue',
+         style: TextStyle(color: Colors.blue),
+         textAlign: TextAlign.center,
+       ),
+       subTitle: InkWell(
+         onTap: () {},
+         child: Text(
+           'Forgot PIN?',
+           style: TextStyle(color: Colors.blue),
+           textAlign: TextAlign.center,
+         ),
+       ),
+       errorMsg: 'Wrong PIN',
+       onSuccess: (pin) {
+         Navigator.pop(context);
+         _showSnackBar(pin);
+       },
+     );
+  }
+}
+```

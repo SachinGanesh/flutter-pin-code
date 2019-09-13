@@ -1,8 +1,8 @@
 name: flutter_pin_code
 description: A new Flutter pin code package.
 version: 0.0.1
-author:
-homepage:
+author: rin.lv
+homepage: https://www.linkedin.com/in/hnrinlv/
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
