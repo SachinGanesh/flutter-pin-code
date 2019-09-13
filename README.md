@@ -1,3 +1,5 @@
+[![Pub](https://img.shields.io/pub/v/flutter_pin_code.svg)](https://pub.dev/packages/flutter_pin_code)
+
 # flutter_pin_code
 
 A simple material design pin code view for flutter apps. Pull requests are always welcome.
@@ -9,7 +11,7 @@ Add this to your package's pubspec.yaml file:
 
 ```
 dependencies:
-  flutter_pin_code: ^1.0.0
+  flutter_pin_code: ^1.0.1
 ```
 
 #### 2. Install it

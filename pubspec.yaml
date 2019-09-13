@@ -1,6 +1,6 @@
 name: flutter_pin_code
 description: A simple Flutter widget for entering pin code using materials design.
-version: 1.0.0
+version: 1.0.1
 author: Rin Luu Van <rinlv.hn@gmail.com>
 homepage: https://github.com/rinlv/flutter-pin-code
 
