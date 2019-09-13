@@ -29,6 +29,12 @@ $ flutter pub get
 
 Alternatively, your editor might support pub get or flutter pub get. Check the docs for your editor to learn more.
 
+#### 3.Import it Now in your Dart code, you can use:
+
+```
+import 'package:flutter_pin_code/flutter_pin_code.dart';
+```
+
 ## Usage
 
 ```dart
@@ -60,3 +66,5 @@ class MyWidget extends StatelessWidget {
   }
 }
 ```
+
+![](sample.gif)
