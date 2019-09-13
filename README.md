@@ -9,7 +9,7 @@ Add this to your package's pubspec.yaml file:
 
 ```
 dependencies:
-  flutter_pin_code: ^0.0.1
+  flutter_pin_code: ^1.0.0
 ```
 
 #### 2. Install it

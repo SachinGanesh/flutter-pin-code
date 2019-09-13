@@ -1,8 +1,8 @@
 name: flutter_pin_code
-description: A new Flutter pin code package.
-version: 0.0.1
-author: rin.lv
-homepage: https://www.linkedin.com/in/hnrinlv/
+description: A simple Flutter widget for entering pin code using materials design.
+version: 1.0.0
+author: Rin Luu Van <rinlv.hn@gmail.com>
+homepage: https://github.com/rinlv/flutter-pin-code
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -13,7 +13,7 @@ dependencies:
   bloc: ^0.15.0
   flutter_bloc: ^0.21.0
   equatable: ^0.5.1
-  flutter_screenutil: ^0.5.2
+  flutter_screenutil: ^0.6.0
 
 dev_dependencies:
   flutter_test:

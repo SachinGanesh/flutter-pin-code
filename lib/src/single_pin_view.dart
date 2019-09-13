@@ -7,6 +7,8 @@
  * See LICENSE for distribution and usage details.
  */
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -29,7 +31,9 @@ class SinglePinView extends StatelessWidget {
         child: Text(
           hasValue ? '●' : '○',
           style: TextStyle(
-              fontSize: ScreenUtil.instance.setSp(64),
+              fontSize: Platform.isIOS
+                  ? ScreenUtil.instance.setSp(64)
+                  : ScreenUtil.instance.setSp(80),
               color: hasValue ? selectedColor : normalColor),
         ),
       ),
