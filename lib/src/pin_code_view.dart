@@ -100,17 +100,21 @@ class _StatePinCodeView extends State<PinCodeView> {
             ),
           ),
           Container(
-              height: ScreenUtil.instance.setHeight(120),
+              height: ScreenUtil.instance.setHeight(200),
               child: Center(
-                child: ListView.builder(
+                child: ListView.separated(
                   physics: NeverScrollableScrollPhysics(),
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
+                  separatorBuilder: (context, index) => SizedBox(
+                    width: 15,
+                  ),
                   itemBuilder: (context, index) {
                     return SinglePinView(
                       normalColor: widget.normalColor,
                       selectedColor: widget.selectedColor,
                       hasValue: index < selLength,
+                      pinSize: 30,
                     );
                   },
                   itemCount: length,
@@ -141,30 +145,34 @@ class _StatePinCodeView extends State<PinCodeView> {
               child: widget.subTitle,
             ),
           ),
-          GridView.count(
-            padding: EdgeInsets.only(
-                left: ScreenUtil.instance.setWidth(40),
-                right: ScreenUtil.instance.setWidth(40),
-                bottom: ScreenUtil.instance.setHeight(60)),
-            shrinkWrap: true,
-            childAspectRatio: 3,
-            crossAxisCount: 3,
-            mainAxisSpacing: 4,
-            crossAxisSpacing: 4,
-            children: <Widget>[
-              buildButtonNumber(1),
-              buildButtonNumber(2),
-              buildButtonNumber(3),
-              buildButtonNumber(4),
-              buildButtonNumber(5),
-              buildButtonNumber(6),
-              buildButtonNumber(7),
-              buildButtonNumber(8),
-              buildButtonNumber(9),
-              Container(),
-              buildButtonNumber(0),
-              buildContainerIcon(Icons.backspace),
-            ],
+          Card(
+            elevation: 12,
+            child: GridView.count(
+              padding: EdgeInsets.only(
+                  left: ScreenUtil.instance.setWidth(40),
+                  right: ScreenUtil.instance.setWidth(40),
+                  top: ScreenUtil.instance.setHeight(40),
+                  bottom: ScreenUtil.instance.setHeight(40)),
+              shrinkWrap: true,
+              childAspectRatio: 1,
+              crossAxisCount: 3,
+              // mainAxisSpacing: 70,
+              crossAxisSpacing: 4,
+              children: <Widget>[
+                buildButtonNumber(1),
+                buildButtonNumber(2),
+                buildButtonNumber(3),
+                buildButtonNumber(4),
+                buildButtonNumber(5),
+                buildButtonNumber(6),
+                buildButtonNumber(7),
+                buildButtonNumber(8),
+                buildButtonNumber(9),
+                Container(),
+                buildButtonNumber(0),
+                buildContainerIcon(Icons.backspace),
+              ],
+            ),
           )
         ],
       ),
@@ -180,6 +188,7 @@ class _StatePinCodeView extends State<PinCodeView> {
 
   Widget buildButtonNumber(int number) {
     return FlatButton(
+      splashColor: Color(0x8837DFCB),
       color: widget.normalColor,
       onPressed: () {
         _pinCodeViewBloc.dispatch(InputPinCodeEvent(number));
@@ -189,7 +198,7 @@ class _StatePinCodeView extends State<PinCodeView> {
           child: Text(
             number.toString(),
             style: TextStyle(
-                fontSize: ScreenUtil.instance.setSp(56),
+                fontSize: ScreenUtil.instance.setSp(80),
                 fontWeight: FontWeight.normal,
                 color: widget.textColor),
           ),
@@ -209,7 +218,7 @@ class _StatePinCodeView extends State<PinCodeView> {
           child: Icon(
             iconData,
             size: ScreenUtil.instance.setSp(90),
-            color: widget.normalColor,
+            color: Color(0xff37dfcb),
           ),
         ),
       ),

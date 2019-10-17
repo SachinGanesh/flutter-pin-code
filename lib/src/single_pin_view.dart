@@ -16,9 +16,14 @@ class SinglePinView extends StatelessWidget {
   final bool hasValue;
   final Color normalColor;
   final Color selectedColor;
+  final double pinSize;
 
   const SinglePinView(
-      {Key key, this.hasValue, this.normalColor, this.selectedColor})
+      {Key key,
+      this.hasValue,
+      this.normalColor,
+      this.selectedColor,
+      this.pinSize: 50})
       : super(key: key);
 
   @override
@@ -26,16 +31,27 @@ class SinglePinView extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(
           left: ScreenUtil.instance.setWidth(10),
-          right: ScreenUtil.instance.setWidth(10)),
-      child: Center(
-        child: Text(
-          hasValue ? '●' : '○',
-          style: TextStyle(
-              fontSize: Platform.isIOS
-                  ? ScreenUtil.instance.setSp(64)
-                  : ScreenUtil.instance.setSp(80),
-              color: hasValue ? selectedColor : normalColor),
-        ),
+          right: ScreenUtil.instance.setWidth(10),
+          top: 0),
+      child: Align(
+        alignment: Alignment.center,
+        child: hasValue
+            ? Container(
+                height: this.pinSize,
+                width: this.pinSize,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: selectedColor,
+                ),
+              )
+            : Container(
+                height: this.pinSize,
+                width: this.pinSize,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Color(0x40a3a2ac),
+                ),
+              ),
       ),
     );
   }
