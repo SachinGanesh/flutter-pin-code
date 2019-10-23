@@ -25,23 +25,29 @@ class PinCodeView extends StatefulWidget {
   final String errorMsg;
   final PinCodeSuccess onSuccess;
   final int correctPin;
+  final bool enterPhoneMode;
   final Color bgColor;
   final Color textColor;
   final Color normalColor;
   final Color selectedColor;
+  final Function onNumberPressed;
+  final Function onNumberDeleted;
 
-  const PinCodeView(
-      {Key key,
-      this.title,
-      this.subTitle,
-      this.errorMsg,
-      this.onSuccess,
-      this.correctPin = 0,
-      this.bgColor = Colors.white,
-      this.textColor = Colors.white,
-      this.normalColor = Colors.black45,
-      this.selectedColor = Colors.blue})
-      : super(key: key);
+  const PinCodeView({
+    Key key,
+    this.title,
+    this.subTitle,
+    this.errorMsg,
+    this.onSuccess,
+    this.correctPin = 0,
+    this.enterPhoneMode = false,
+    this.bgColor = Colors.white,
+    this.textColor = Colors.white,
+    this.normalColor = Colors.black45,
+    this.selectedColor = Colors.blue,
+    this.onNumberPressed,
+    this.onNumberDeleted,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _StatePinCodeView();
@@ -83,9 +89,11 @@ class _StatePinCodeView extends State<PinCodeView> {
         }
         if (state is SelectedPinCodeState) {
           selLength = state.selLength;
-          hasError = state.hasError;
-          setState(() {});
-          hideError();
+          if (!widget.enterPhoneMode) {
+            hasError = state.hasError;
+            setState(() {});
+            hideError();
+          }
         }
       },
       bloc: _pinCodeViewBloc,
@@ -99,27 +107,29 @@ class _StatePinCodeView extends State<PinCodeView> {
               child: widget.title,
             ),
           ),
-          Container(
-              height: ScreenUtil.instance.setHeight(200),
-              child: Center(
-                child: ListView.separated(
-                  physics: NeverScrollableScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                  separatorBuilder: (context, index) => SizedBox(
-                    width: 15,
-                  ),
-                  itemBuilder: (context, index) {
-                    return SinglePinView(
-                      normalColor: widget.normalColor,
-                      selectedColor: widget.selectedColor,
-                      hasValue: index < selLength,
-                      pinSize: 30,
-                    );
-                  },
-                  itemCount: length,
-                ),
-              )),
+          widget.enterPhoneMode
+              ? Container()
+              : Container(
+                  height: ScreenUtil.instance.setHeight(200),
+                  child: Center(
+                    child: ListView.separated(
+                      physics: NeverScrollableScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      separatorBuilder: (context, index) => SizedBox(
+                        width: 15,
+                      ),
+                      itemBuilder: (context, index) {
+                        return SinglePinView(
+                          normalColor: widget.normalColor,
+                          selectedColor: widget.selectedColor,
+                          hasValue: index < selLength,
+                          pinSize: 30,
+                        );
+                      },
+                      itemCount: length,
+                    ),
+                  )),
           Visibility(
             visible: hasError,
             child: Container(
@@ -192,6 +202,9 @@ class _StatePinCodeView extends State<PinCodeView> {
       color: widget.normalColor,
       onPressed: () {
         _pinCodeViewBloc.dispatch(InputPinCodeEvent(number));
+        if (widget.onNumberPressed != null) {
+          widget.onNumberPressed(number);
+        }
       },
       child: Container(
         child: Center(
@@ -212,6 +225,9 @@ class _StatePinCodeView extends State<PinCodeView> {
       color: Colors.white,
       onPressed: () {
         _pinCodeViewBloc.dispatch(DeletePinCodeEvent());
+        if (widget.onNumberDeleted != null) {
+          widget.onNumberDeleted();
+        }
       },
       child: Container(
         child: Center(
