@@ -161,13 +161,13 @@ class _StatePinCodeView extends State<PinCodeView> {
               padding: EdgeInsets.only(
                   left: ScreenUtil.instance.setWidth(40),
                   right: ScreenUtil.instance.setWidth(40),
-                  top: ScreenUtil.instance.setHeight(40),
-                  bottom: ScreenUtil.instance.setHeight(40)),
+                  top: ScreenUtil.instance.setHeight(0),
+                  bottom: ScreenUtil.instance.setHeight(0)),
               shrinkWrap: true,
               childAspectRatio: 1,
               crossAxisCount: 3,
               // mainAxisSpacing: 70,
-              crossAxisSpacing: 4,
+              crossAxisSpacing: 1,
               children: <Widget>[
                 buildButtonNumber(1),
                 buildButtonNumber(2),

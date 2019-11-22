@@ -29,24 +29,25 @@ class PinCodeViewBloc extends Bloc<PinCodeViewEvent, PinCodeViewState> {
 
   Stream<PinCodeViewState> inputPinCode(int number) async* {
     if (listPin.length < pinLength) {
+      print(">>>> #$number");
       listPin.add(number);
       yield SelectedPinCodeState(listPin.length, false);
-      if (pinLength == listPin.length) {
-        var pinMap = StringBuffer();
-        listPin.forEach((num) {
-          pinMap.write(num);
-        });
-        listPin.clear();
-        if (correctPin == 0) {
-          yield SuccessPinCodeState(pinMap.toString());
-          return;
-        }
-        if (pinMap.toString() == correctPin.toString()) {
-          yield SuccessPinCodeState(pinMap.toString());
-        } else {
-          yield SelectedPinCodeState(0, true);
-        }
-      }
+      // if (pinLength == listPin.length) {
+      //   var pinMap = StringBuffer();
+      //   listPin.forEach((num) {
+      //     pinMap.write(num);
+      //   });
+      //   // listPin.clear();
+      //   if (correctPin == 0) {
+      //     yield SuccessPinCodeState(pinMap.toString());
+      //     return;
+      //   }
+      //   if (pinMap.toString() == correctPin.toString()) {
+      //     yield SuccessPinCodeState(pinMap.toString());
+      //   } else {
+      //     yield SelectedPinCodeState(0, true);
+      //   }
+      // }
     }
   }
 
